@@ -1,0 +1,52 @@
+head
+    title Blank White Cards Online
+
+body
+    .row
+        ul.tabs(data-tab)
+            li.tab-title.active
+                a(href="#panel1") Make Card
+            li.tab-title
+                a(href="#panel2") Play Game
+            li.tab-title
+                a(href="#panel2") Rules
+        .small-6.columns
+            +cardInput
+        .small-6.columns
+            +existingCards
+        +rules
+
+template(name='existingCards')
+    h1 News
+    each cards
+       div(style='margin: 20px')
+           div(style='border: 1px solid black; width: 300px; padding: 10px')
+               div(style='display: inline-block; width: 200px') 
+                   h4 #{name}
+               div(style='display: inline-block; border: 2px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; width: 50px') 
+                   h4 #{cost}                   
+           div.cardUnicode #{unicode}
+           div(style='border: 1px solid black;  width: 300px; padding: 5px')
+               p(style='color: gray') #{rules} 
+
+template(name='cardInput')
+    h1 Make a Card
+    p
+        span Card name: 
+        input#cardName 
+    p
+        span Card cost:
+        input#cardCost
+    p
+        span Card Unicode:
+        input#cardUnicode(style='font-size: 100px; width: 200px')
+    p 
+        span Card rules:
+        textarea#cardRules
+    p 
+        input(type='submit')#submitCard
+
+template(name='rules')
+    h1 Rules
+    p Every player in a game has 10 life and 0 prestige.
+    p Every turn 
