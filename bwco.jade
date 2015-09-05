@@ -25,7 +25,8 @@ template(name='existingCards')
                    h4 #{name}
                div(style='display: inline-block; border: 2px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; width: 50px') 
                    h4 #{cost}                   
-           div.cardUnicode #{unicode}
+           .cardDisplayImageBox
+               img.cardDisplayImage(src="{{image.url}}")
            div(style='border: 1px solid black;  width: 300px; padding: 5px')
                p(style='color: gray') #{rules} 
 
@@ -38,8 +39,9 @@ template(name='cardInput')
         span Card cost:
         input#cardCost
     p
-        span Card Unicode:
-        input#cardUnicode(style='font-size: 100px; width: 200px')
+        span Card Image:
+        input#cardImage(type='file')
+        input#cardImageId(style='display: none')
     p 
         span Card rules:
         textarea#cardRules

@@ -11,3 +11,5 @@ stylus
 coffeescript
 mquandalle:jade
 ewall:foundation
+cfs:standard-packages
+cfs:gridfs
