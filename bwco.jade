@@ -3,35 +3,65 @@ head
 
 body
     .row
-        ul.tabs(data-tab)
-            li.tab-title.active
-                a(href="#panel1") Make Card
-            li.tab-title
-                a(href="#panel2") Play Game
-            li.tab-title
-                a(href="#panel2") Rules
+        +tabs
         .small-6.columns
-            +cardInput
+            .tabs-content
+                .content.active#makeCardPanel
+                    +cardInput
+                .content#adminPanel
+                    +admin
+                .content#rulesPanel
+                    +rules     
+                .content#playGamePanel
+                    +playGame           
         .small-6.columns
-            +existingCards
-        +rules
+            +newsFeed
 
-template(name='existingCards')
-    h1 News
+template(name='tabs')
+    +loginButtons    
+    ul.tabs(data-tab)
+        li.tab-title.active
+            a(href="#makeCardPanel") Make Card
+        li.tab-title
+            a(href="#playGamePanel") Play Game (#{playersInLobby})
+        li.tab-title
+            a(href="#rulesPanel") Rules
+        if admin
+            li.tab-title
+                a(href="#adminPanel") Admin
+
+template(name='newsFeed')
+    h3 New Cards
     each cards
-       div(style='margin: 20px')
-           div(style='border: 1px solid black; width: 300px; padding: 10px')
-               div(style='display: inline-block; width: 200px') 
-                   h4 #{name}
-               div(style='display: inline-block; border: 2px solid black; border-radius: 10px; padding-left: 10px; padding-right: 10px; width: 50px') 
-                   h4 #{cost}                   
-           .cardDisplayImageBox
-               img.cardDisplayImage(src="{{image.url}}")
-           div(style='border: 1px solid black;  width: 300px; padding: 5px')
-               p(style='color: gray') #{rules} 
+        +card
+
+template(name='playGame')
+    #lobby
+        div(style='border: 1px solid black')
+            h5 Players in lobby:
+            ul
+                each players
+                    li #{username}
+    br
+    if twoOrMorePlayers
+        p 
+            a.button#startGame Start Game
+
+template(name='card')
+    .card
+        .topBox
+           .name
+               h4 #{name}
+           .cost
+               h4 #{cost}                   
+        .displayImageBox
+            .centeredDiv
+               img.displayImage(src="{{image.url}}")
+        .bottomBox
+            p.rulesText #{rules} 
 
 template(name='cardInput')
-    h1 Make a Card
+    h3 Make a Card
     p
         span Card name: 
         input#cardName 
@@ -48,7 +78,17 @@ template(name='cardInput')
     p 
         input(type='submit')#submitCard
 
+template(name='admin')
+    h3 Admin
+    each cards
+        +card
+        input#cardApproved(type="checkbox" checked=approved style='width: 100px; height: 100px')
+
+
 template(name='rules')
-    h1 Rules
-    p Every player in a game has 10 life and 0 prestige.
-    p Every turn 
+    h3 Rules
+    p In Blank White Cards Online, you make cards, make a deck out of the cards other people have made, and then use them to fight against each other.
+    p You start the game with 5 cards drawn out of your deck. Every turn you draw a new card.
+    p You play cards out of your hand by spending Influence equal to the card's cost. You start the first turn with 1 Influence to spend, and on the next turn gain 1 more total Influence to spend (2 Influence), and so on.
+    p The object of the game is to have at least 10 Prestige by the end of turn 10. You gain Prestige by playing certain cards.
+    p You also have 10 life. Certain cards may make you lose life. If you lose all of your life, you die.

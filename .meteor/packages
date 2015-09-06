@@ -13,3 +13,6 @@ mquandalle:jade
 ewall:foundation
 cfs:standard-packages
 cfs:gridfs
+accounts-ui
+accounts-password
+mizzao:user-status
